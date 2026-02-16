@@ -1,0 +1,1370 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#fef7fb" />
+  <title>Misión: Construir la Nueva Escuela Mexicana</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --bg:#fef7fb;
+      --bg-soft:#f5efff;
+      --panel:#ffffff;
+      --panel2:#fdf8ff;
+      --text:#2d3552;
+      --muted:#6f7897;
+      --ok:#67d6b6;
+      --bad:#ff8a92;
+      --warn:#ffd67a;
+      --info:#8fb0ff;
+      --accent:#91d8ff;
+      --accent-2:#ffb7d3;
+      --shadow: 0 14px 34px rgba(123,109,168,.16);
+      --radius: 20px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: "Manrope", "Segoe UI", sans-serif;
+      background:
+        radial-gradient(880px 520px at 8% 8%, rgba(145,216,255,.6) 0%, rgba(145,216,255,0) 58%),
+        radial-gradient(900px 560px at 94% 0%, rgba(255,183,211,.55) 0%, rgba(255,183,211,0) 60%),
+        radial-gradient(960px 620px at 50% 100%, rgba(255,214,122,.42) 0%, rgba(255,214,122,0) 62%),
+        var(--bg);
+      color: var(--text);
+      min-height:100vh;
+      min-height:100dvh;
+      display:flex;
+      justify-content:center;
+      padding: max(14px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) max(18px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
+      position:relative;
+      overflow-x:hidden;
+    }
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(transparent 96%, rgba(155,132,199,.1) 100%),
+        linear-gradient(90deg, transparent 96%, rgba(155,132,199,.08) 100%);
+      background-size: 100% 28px, 28px 100%;
+      opacity:.2;
+    }
+    .app{
+      width:min(1120px, 100%);
+      display:grid;
+      gap:18px;
+      grid-template-columns: 1fr;
+      position:relative;
+      z-index:1;
+    }
+    header{
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      align-items:center;
+      justify-content:space-between;
+      background: linear-gradient(145deg, rgba(255,255,255,.95), rgba(248,241,255,.95));
+      border: 1px solid rgba(205,193,235,.8);
+      border-radius: var(--radius);
+      padding:16px 18px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(5px);
+    }
+    header .title{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 260px;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:46px;height:46px;
+      border-radius:15px;
+      background: linear-gradient(135deg, rgba(145,216,255,.85), rgba(255,183,211,.86));
+      border:1px solid rgba(206,194,236,.8);
+      box-shadow: 0 8px 22px rgba(128,120,166,.22);
+      font-size:20px;
+    }
+    h1{
+      font-size:21px;
+      font-family: "Bitter", Georgia, serif;
+      margin:0;
+      line-height:1.2;
+      letter-spacing:.2px;
+    }
+    .sub{
+      margin:4px 0 0;
+      color: var(--muted);
+      font-size:13px;
+      letter-spacing:.2px;
+    }
+    .hud{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
+    .pill{
+      background: rgba(145,216,255,.2);
+      border: 1px solid rgba(173,160,215,.44);
+      border-radius: 999px;
+      padding:8px 12px;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      font-size:13px;
+      color: var(--muted);
+    }
+    .pill strong{color:var(--text)}
+    main{
+      display:grid;
+      gap:18px;
+      grid-template-columns: 1fr 350px;
+      align-items:start;
+    }
+    @media (max-width: 920px){
+      main{grid-template-columns: 1fr}
+    }
+    .card{
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.75)),
+        linear-gradient(145deg, var(--panel), var(--panel2));
+      border: 1px solid rgba(205,193,235,.7);
+      border-radius: var(--radius);
+      padding:18px;
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .card::before{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      top:0;
+      height:3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      opacity:.85;
+      pointer-events:none;
+    }
+    .screen-title{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      justify-content:space-between;
+      margin-bottom:10px;
+    }
+    .screen-title h2{
+      margin:0;
+      font-size:18px;
+      font-family: "Bitter", Georgia, serif;
+    }
+    .tag{
+      font-size:12px;
+      color: #3f3a66;
+      border:1px solid rgba(176,162,220,.5);
+      padding:6px 12px;
+      border-radius:999px;
+      background: rgba(145,216,255,.35);
+      white-space:nowrap;
+    }
+    .dialog{
+      background: rgba(255,255,255,.65);
+      border:1px solid rgba(201,189,234,.55);
+      border-radius: 16px;
+      padding:13px;
+      margin: 12px 0 14px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+    }
+    .line{
+      display:flex;
+      gap:10px;
+      margin:10px 0;
+    }
+    .avatar{
+      width:38px;height:38px;
+      border-radius: 14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: rgba(145,216,255,.2);
+      border:1px solid rgba(176,162,220,.45);
+      flex:0 0 auto;
+      font-size:18px;
+    }
+    .bubble{
+      flex:1;
+      padding:11px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(201,189,234,.5);
+      background: rgba(255,255,255,.82);
+    }
+    .who{font-weight:700; font-size:13px; margin-bottom:4px}
+    .text{color: var(--text); font-size:14px; line-height:1.42}
+    .muted{color:var(--muted)}
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+    button{
+      cursor:pointer;
+      border:none;
+      border-radius: 14px;
+      padding:10px 14px;
+      font-weight:700;
+      font-family: "Manrope", "Segoe UI", sans-serif;
+      color: #2f3153;
+      background: linear-gradient(135deg, rgba(145,216,255,.95), rgba(255,183,211,.95));
+      border: 1px solid rgba(181,167,223,.62);
+      box-shadow: 0 8px 20px rgba(132,121,173,.22);
+      transition: transform .08s ease, filter .2s ease, background .2s ease, box-shadow .2s ease;
+      user-select:none;
+      touch-action: manipulation;
+    }
+    button:hover{
+      filter:brightness(1.04);
+      box-shadow: 0 11px 24px rgba(132,121,173,.25);
+    }
+    button:active{transform:translateY(1px)}
+    button.secondary{
+      background: rgba(255,255,255,.82);
+      border: 1px solid rgba(194,182,231,.65);
+      color: #636b8a;
+      box-shadow:none;
+    }
+    button.danger{
+      background: rgba(255,138,146,.24);
+      border: 1px solid rgba(233,129,139,.55);
+    }
+    .options{
+      display:grid;
+      gap:10px;
+      margin-top:10px;
+    }
+    .option{
+      text-align:left;
+      width:100%;
+      background: rgba(255,255,255,.88);
+      border: 1px solid rgba(195,183,231,.6);
+      color: var(--text);
+      padding:12px 13px;
+      border-radius: 16px;
+      font-weight:700;
+      box-shadow:none;
+      transition: transform .12s ease, border-color .2s ease, background .2s ease;
+      touch-action: manipulation;
+    }
+    .option:hover{
+      transform: translateY(-1px);
+      border-color: rgba(163,147,214,.64);
+      background: rgba(250,245,255,.95);
+    }
+    .option small{display:block; font-weight:500; color:var(--muted); margin-top:4px}
+    .option.correct{
+      border-color: rgba(103,214,182,.78);
+      background: rgba(103,214,182,.2);
+    }
+    .option.wrong{
+      border-color: rgba(255,138,146,.74);
+      background: rgba(255,138,146,.2);
+    }
+    .toast{
+      margin-top:10px;
+      padding:11px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(194,182,231,.55);
+      background: rgba(255,255,255,.82);
+      color: var(--muted);
+      display:none;
+    }
+    .toast.show{display:block}
+    .aside h3{
+      margin:0 0 8px;
+      font-size:14px;
+    }
+    .progress{
+      display:grid;
+      gap:8px;
+    }
+    .level-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 10px;
+      border-radius: 14px;
+      border:1px solid rgba(194,182,231,.55);
+      background: rgba(255,255,255,.76);
+    }
+    .level-row .left{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      min-width:0;
+    }
+    .dot{
+      width:12px;height:12px;border-radius:999px;
+      background: rgba(182,169,222,.45);
+      border:1px solid rgba(162,147,211,.66);
+      box-shadow: 0 0 0 4px rgba(195,183,231,.28);
+    }
+    .dot.done{background: rgba(53,214,159,.88); border-color: rgba(53,214,159,.95)}
+    .dot.current{background: rgba(246,196,83,.92); border-color: rgba(246,196,83,.98)}
+    .lvl-title{
+      font-size:13px;
+      color: var(--text);
+      font-weight:700;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width: 210px;
+    }
+    .lvl-state{
+      font-size:12px;
+      color: var(--muted);
+      white-space:nowrap;
+    }
+    .concepts{
+      margin-top:14px;
+      display:grid;
+      gap:10px;
+    }
+    .concept-list{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .chip{
+      font-size:12px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(194,182,231,.52);
+      background: rgba(255,255,255,.8);
+      color: var(--muted);
+    }
+    .chip.unlocked{
+      color: var(--text);
+      background: rgba(145,216,255,.38);
+      border-color: rgba(146,177,236,.56);
+    }
+    .mini{
+      font-size:12px;
+      color: var(--muted);
+      line-height:1.35;
+    }
+    .footer-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size:12px;
+      padding:2px 6px;
+      border-radius:8px;
+      border:1px solid rgba(194,182,231,.48);
+      background: rgba(255,255,255,.8);
+      color: var(--muted);
+      white-space:nowrap;
+    }
+    .final{
+      padding:14px;
+      border-radius: 16px;
+      border:1px solid rgba(103,214,182,.62);
+      background: rgba(211,248,236,.72);
+      margin-top:12px;
+      display:none;
+    }
+    .final.show{display:block}
+    .final h3{margin:0 0 6px}
+    .final p{margin:0; color:var(--text); line-height:1.35}
+    .lose-banner{
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(46, 34, 80, 0.42);
+      backdrop-filter: blur(4px);
+      z-index: 9999;
+      padding: 18px;
+    }
+    .lose-banner.show{
+      display:flex;
+      animation: fadeIn .25s ease;
+    }
+    .lose-card{
+      max-width: 560px;
+      width: 100%;
+      text-align: center;
+      background: linear-gradient(145deg, #fff5f7, #ffe8ef);
+      border: 3px solid #ff8a92;
+      border-radius: 22px;
+      box-shadow: 0 18px 46px rgba(76, 32, 67, .3);
+      padding: 26px 20px;
+      transform: scale(.96);
+      animation: popLose .28s ease forwards;
+    }
+    .lose-title{
+      margin:0;
+      font-family: "Bitter", Georgia, serif;
+      font-size: clamp(30px, 6vw, 46px);
+      color:#bd3b58;
+      letter-spacing: .8px;
+    }
+    .lose-sub{
+      margin:10px 0 0;
+      color:#6d4f67;
+      font-weight:700;
+      font-size:16px;
+    }
+    @keyframes popLose{
+      to{transform:scale(1);}
+    }
+    @keyframes fadeIn{
+      from{opacity:0;}
+      to{opacity:1;}
+    }
+    .aside{
+      position:sticky;
+      top:20px;
+    }
+    button:focus-visible,
+    .option:focus-visible{
+      outline:2px solid rgba(246,196,83,.95);
+      outline-offset:2px;
+    }
+    @media (max-width: 920px){
+      .aside{
+        position:static;
+      }
+      header .title{
+        min-width:100%;
+      }
+      .hud{
+        width:100%;
+        justify-content:flex-start;
+      }
+    }
+    @media (max-width: 680px){
+      body{
+        padding:14px 10px 18px;
+      }
+      .card{
+        padding:14px;
+      }
+      h1{
+        font-size:18px;
+      }
+      .actions{
+        gap:8px;
+      }
+      .actions button{
+        flex:1 1 160px;
+      }
+      .footer-actions button{
+        flex:1 1 180px;
+      }
+      .pill{
+        padding:7px 10px;
+      }
+      .line{
+        gap:8px;
+      }
+      .avatar{
+        width:34px;
+        height:34px;
+        border-radius:12px;
+      }
+      .lvl-title{
+        max-width:150px;
+      }
+      .screen-title{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+    }
+    @media (min-width: 1180px){
+      .app{
+        width:min(1240px, 100%);
+      }
+      main{
+        grid-template-columns:minmax(0, 1fr) 380px;
+      }
+      h1{
+        font-size:23px;
+      }
+      .screen-title h2{
+        font-size:20px;
+      }
+    }
+    @supports not ((backdrop-filter: blur(4px)) or (-webkit-backdrop-filter: blur(4px))){
+      header{
+        background: rgba(255,255,255,.98);
+      }
+      .lose-banner{
+        background: rgba(46, 34, 80, 0.56);
+      }
+    }
+    @media (prefers-reduced-motion: reduce){
+      *{
+        animation:none !important;
+        transition:none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="title">
+        <div class="badge">🎮</div>
+        <div>
+          <h1>Misión: Construir la Nueva Escuela Mexicana</h1>
+          <div class="sub">Narrativa digital interactiva (5 niveles + conceptos desbloqueables)</div>
+        </div>
+      </div>
+
+      <div class="hud">
+        <div class="pill">⭐ Puntos: <strong id="points">0</strong>/<strong id="pointsMax">0</strong></div>
+        <div class="pill">❤️ Vidas: <strong id="lives">3</strong></div>
+        <div class="pill">🔓 Conceptos: <strong id="unlocksCount">0</strong>/<strong id="unlocksTotal">0</strong></div>
+      </div>
+    </header>
+
+    <main>
+      <section class="card">
+        <div class="screen-title">
+          <div>
+            <h2 id="screenH2">Inicio</h2>
+            <div class="mini" id="screenHint">Completa misiones para alcanzar el Perfil de Egreso.</div>
+          </div>
+          <div class="tag" id="screenTag">Bienvenida</div>
+        </div>
+
+        <div class="dialog" id="dialogBox"></div>
+
+        <div id="questionBox"></div>
+
+        <div class="toast" id="toast"></div>
+
+        <div class="final" id="finalBox">
+          <h3>🏆 ¡Perfil de egreso alcanzado!</h3>
+          <p>
+            Completaste las 5 misiones: planeaste, evaluaste con sentido, desarrollaste autonomía,
+            fortaleciste la comunidad y entendiste el sistema educativo.
+          </p>
+          <div class="footer-actions">
+            <button class="secondary" id="btnRestart">Reiniciar</button>
+            <button class="secondary" id="btnExport">Exportar progreso (texto)</button>
+          </div>
+          <div class="mini" id="exportOut" style="margin-top:10px;"></div>
+        </div>
+
+        <div class="actions">
+          <button id="btnPrev" class="secondary">⬅️ Atrás</button>
+          <button id="btnNext">Siguiente ➡️</button>
+          <button id="btnReset" class="danger">Reiniciar juego</button>
+        </div>
+
+        <div class="mini" style="margin-top:10px;">
+          Tip: usa <span class="kbd">Siguiente</span> para avanzar. Si fallas, pierdes una vida. Si te quedas sin vidas, se reinicia todo el juego.
+        </div>
+      </section>
+
+      <aside class="card aside">
+        <h3>🗺 Progreso por niveles</h3>
+        <div class="progress" id="progressList"></div>
+
+        <div class="concepts">
+          <h3>🃏 Conceptos desbloqueados</h3>
+          <div class="mini">Cada nivel desbloquea conceptos clave (flashcards).</div>
+          <div class="concept-list" id="conceptList"></div>
+        </div>
+
+        <div class="footer-actions">
+          <button class="secondary" id="btnShowCards">Ver flashcards</button>
+          <button class="secondary" id="btnHelp">¿Cómo jugar?</button>
+          <button class="secondary" id="btnCopyLink">Compartir enlace</button>
+        </div>
+
+        <div class="toast" id="asideToast"></div>
+      </aside>
+    </main>
+  </div>
+  <div id="loseBanner" class="lose-banner" aria-live="assertive" role="alert">
+    <div class="lose-card">
+      <h2 class="lose-title">PERDISTE</h2>
+      <p class="lose-sub">Te quedaste sin vidas. El juego se reiniciará desde el inicio.</p>
+    </div>
+  </div>
+
+  <script>
+    const LEVELS = [
+      {
+        id: 0,
+        title: "Inicio",
+        tag: "Bienvenida",
+        hint: "Completa misiones para alcanzar el Perfil de Egreso.",
+        unlocks: [],
+        steps: [
+          {
+            dialog: [
+              { who:"Narrador", icon:"🎙️", text:"Bienvenida. Hoy harás 5 misiones para construir la Nueva Escuela Mexicana (NEM) dentro del MCCEMS." },
+              { who:"Profe Mariana", icon:"👩‍🏫", text:"No es memorizar por memorizar: es comprender y aplicar. ¡Vamos paso a paso!" },
+              { who:"Ana", icon:"👩‍🎓", text:"¿Y si me equivoco?" },
+              { who:"Luis", icon:"👨‍🎓", text:"Aprendemos con retroalimentación. ¡Eso es formativo!" }
+            ]
+          }
+        ]
+      },
+      {
+        id: 1,
+        title: "Nivel 1: Planeación Estratégica",
+        tag: "Planeación",
+        hint: "Define metas y organiza el aprendizaje.",
+        unlocks: [
+          { name:"Meta educativa", def:"Resultado de aprendizaje que el estudiante debe alcanzar." },
+          { name:"Propósito formativo", def:"Aprendizajes esperados al finalizar un proceso." },
+          { name:"Planeación didáctica", def:"Organización de estrategias y recursos para enseñar." },
+          { name:"Currículum", def:"Plan que organiza metas y contenidos." },
+          { name:"Transversalidad", def:"Integración de contenidos entre asignaturas." },
+          { name:"PAEC", def:"Vincula escuela con proyectos comunitarios." }
+        ],
+        steps: [
+          {
+            dialog: [
+              { who:"Narrador", icon:"🎙️", text:"Escenario: Aula con pizarrón digital. La misión es planear con propósito." },
+              { who:"Profe Mariana", icon:"👩‍🏫", text:"Antes de iniciar, debemos definir la meta educativa y planear el camino." }
+            ],
+            question: {
+              prompt: "¿Cuál opción representa correctamente una Meta educativa?",
+              options: [
+                { key:"A", text:"Improvisar actividades", explain:"Sin meta, no hay dirección." },
+                { key:"B", text:"Establecer resultados de aprendizaje", explain:"La meta define lo que se espera lograr." },
+                { key:"C", text:"Solo aplicar exámenes", explain:"Evaluar no sustituye planear." }
+              ],
+              answer: "B",
+              onCorrect: { points: 20, toast:"✅ ¡Bien! Definir metas guía la planeación didáctica." },
+              onWrong: { lives: -1, toast:"❌ Casi… Meta educativa = resultado de aprendizaje (no improvisación ni solo exámenes)." }
+            }
+          },
+          {
+            dialog: [
+              { who:"Ana", icon:"👩‍🎓", text:"Si conectamos Matemáticas con Ética para resolver un problema real… ¿eso cuenta?" },
+              { who:"Luis", icon:"👨‍🎓", text:"¡Sí! Eso es transversalidad y contextualización." },
+              { who:"Profe Mariana", icon:"👩‍🏫", text:"Exacto. Y si además se conecta con la comunidad, entra el PAEC." }
+            ],
+            question: {
+              prompt: "¿Qué describe mejor la Transversalidad?",
+              options: [
+                { key:"A", text:"Trabajar una materia aislada", explain:"Eso es lo contrario." },
+                { key:"B", text:"Repetir el mismo tema en todas", explain:"No es repetir, es integrar con propósito." },
+                { key:"C", text:"Conectar contenidos entre asignaturas", explain:"Integra saberes para darle sentido." }
+              ],
+              answer: "C",
+              onCorrect: { points: 20, toast:"✅ ¡Correcto! Integrar materias hace el aprendizaje más significativo." },
+              onWrong: { lives: -1, toast:"❌ Ojo: Transversalidad = integrar contenidos entre asignaturas." }
+            }
+          }
+        ]
+      },
+      {
+        id: 2,
+        title: "Nivel 2: Evaluación Inteligente",
+        tag: "Evaluación",
+        hint: "Evalúa para mejorar, no para castigar.",
+        unlocks: [
+          { name:"Evaluación diagnóstica", def:"Evalúa saberes previos al inicio." },
+          { name:"Evaluación formativa", def:"Acompaña el proceso para mejorar." },
+          { name:"Evaluación sumativa", def:"Valora al final para calificar." },
+          { name:"Evaluación continua", def:"Seguimiento constante del aprendizaje." },
+          { name:"Evaluación por criterio", def:"Valora según estándares." },
+          { name:"Retroalimentación", def:"Orientación para mejorar el aprendizaje." },
+          { name:"Instrumentos de evaluación", def:"Herramientas para valorar desempeño." }
+        ],
+        steps: [
+          {
+            dialog: [
+              { who:"Narrador", icon:"🎙️", text:"Escenario: Laboratorio de evaluación. Tu misión: escoger el tipo correcto según el momento." },
+              { who:"Profe Mariana", icon:"👩‍🏫", text:"Primero diagnóstico; después formativa; al final sumativa. Y siempre retroalimentación." }
+            ],
+            question: {
+              prompt: "Selecciona la combinación correcta:",
+              options: [
+                { key:"A", text:"Diagnóstica = inicio / Formativa = durante / Sumativa = final", explain:"Orden correcto." },
+                { key:"B", text:"Diagnóstica = final / Formativa = inicio / Sumativa = durante", explain:"Está invertido." },
+                { key:"C", text:"Diagnóstica = durante / Formativa = final / Sumativa = inicio", explain:"No corresponde." }
+              ],
+              answer: "A",
+              onCorrect: { points: 25, toast:"✅ ¡Perfecto! Evaluar bien el momento mejora las decisiones docentes." },
+              onWrong: { lives: -1, toast:"❌ Recuerda: Diagnóstica (inicio), Formativa (durante), Sumativa (final)." }
+            }
+          },
+          {
+            dialog: [
+              { who:"Luis", icon:"👨‍🎓", text:"Entonces… si usamos rúbricas, listas de cotejo o guías, ¿eso qué es?" },
+              { who:"Profe Mariana", icon:"👩‍🏫", text:"Son instrumentos de evaluación. Y deben alinearse a criterios claros." }
+            ],
+            question: {
+              prompt: "¿Qué es una Evaluación por criterio?",
+              options: [
+                { key:"A", text:"Comparar alumnos entre sí", explain:"Eso es normativo, no por criterio." },
+                { key:"B", text:"Calificar solo con examen", explain:"Reducido e incompleto." },
+                { key:"C", text:"Valorar desempeño según estándares", explain:"Define qué cuenta como logro." }
+              ],
+              answer: "C",
+              onCorrect: { points: 20, toast:"✅ ¡Bien! Criterios claros = más justicia y claridad." },
+              onWrong: { lives: -1, toast:"❌ Por criterio = estándares establecidos, no comparación entre alumnos." }
+            }
+          }
+        ]
+      },
+      {
+        id: 3,
+        title: "Nivel 3: Desarrollo Integral",
+        tag: "Autonomía",
+        hint: "Pensamiento crítico + praxis + socioemocional.",
+        unlocks: [
+          { name:"Pensamiento crítico", def:"Analizar y reflexionar para construir conocimiento propio." },
+          { name:"Autonomía", def:"Capacidad de decidir y actuar por cuenta propia." },
+          { name:"Praxis", def:"Unión entre teoría y práctica para transformar la realidad." },
+          { name:"Capacidades", def:"Habilidades desarrolladas en interacción con el entorno." },
+          { name:"Formación socioemocional", def:"Habilidades para conocerse, decidir y convivir." }
+        ],
+        steps: [
+          {
+            dialog: [
+              { who:"Narrador", icon:"🎙️", text:"Escenario: Árbol del conocimiento. Tu misión: elegir acciones que desarrollen autonomía y pensamiento crítico." },
+              { who:"Ana", icon:"👩‍🎓", text:"Pensamiento crítico no es pelear, es argumentar y reflexionar." }
+            ],
+            question: {
+              prompt: "¿Cuál acción representa mejor la Praxis?",
+              options: [
+                { key:"A", text:"Memorizar sin aplicar", explain:"Falta práctica y transformación." },
+                { key:"B", text:"Aplicar teoría para resolver un problema real", explain:"Une teoría + práctica." },
+                { key:"C", text:"Copiar tareas", explain:"No hay aprendizaje propio." }
+              ],
+              answer: "B",
+              onCorrect: { points: 25, toast:"✅ ¡Exacto! Praxis = teoría + práctica para transformar." },
+              onWrong: { lives: -1, toast:"❌ Praxis implica aplicar teoría en situaciones reales." }
+            }
+          },
+          {
+            dialog: [
+              { who:"Luis", icon:"👨‍🎓", text:"Si decido estrategias para estudiar y evalúo si me sirven… ¿eso es autonomía?" },
+              { who:"Profe Mariana", icon:"👩‍🏫", text:"Sí. Autonomía es decidir y responsabilizarse del propio aprendizaje." }
+            ],
+            question: {
+              prompt: "¿Qué describe mejor la Autonomía?",
+              options: [
+                { key:"A", text:"Decidir y actuar con responsabilidad", explain:"Implica elección y consecuencias." },
+                { key:"B", text:"Hacer lo que sea sin reglas", explain:"No es libertinaje." },
+                { key:"C", text:"Esperar instrucciones siempre", explain:"Eso reduce autonomía." }
+              ],
+              answer: "A",
+              onCorrect: { points: 20, toast:"✅ ¡Muy bien! Autonomía = decisión + responsabilidad." },
+              onWrong: { lives: -1, toast:"❌ Autonomía no es “sin reglas”, es actuar con responsabilidad." }
+            }
+          }
+        ]
+      },
+      {
+        id: 4,
+        title: "Nivel 4: Comunidad y Justicia",
+        tag: "Comunidad",
+        hint: "Equidad, justicia social, interculturalidad, pluralidad.",
+        unlocks: [
+          { name:"Equidad", def:"Dar a cada quien lo necesario para lograr justicia." },
+          { name:"Justicia social", def:"Eliminar discriminación y desigualdades." },
+          { name:"Igualdad sustantiva", def:"Garantía real de derechos y oportunidades." },
+          { name:"Perspectiva intercultural", def:"Respeto a la diversidad cultural en igualdad." },
+          { name:"Pluralidad epistémica", def:"Reconocer diversas formas válidas de conocimiento." },
+          { name:"Cultura de paz", def:"Promover respeto, justicia y tolerancia." },
+          { name:"Dignidad", def:"Valor inherente de toda persona." },
+          { name:"Sentido ético", def:"Actuar guiado por principios y valores." },
+          { name:"Sentido comunitario", def:"Buscar bienestar común basado en igualdad." },
+          { name:"Humanismo mexicano", def:"Enfoque centrado en identidad y transformación social." },
+          { name:"Decolonial", def:"Cuestiona estructuras heredadas del colonialismo." },
+          { name:"Colonialidad", def:"Persistencia de desigualdades coloniales." },
+          { name:"Desigualdad", def:"Trato injusto por diferencias sociales o culturales." }
+        ],
+        steps: [
+          {
+            dialog: [
+              { who:"Narrador", icon:"🎙️", text:"Escenario: Plaza comunitaria. Tu misión: elegir decisiones justas y pacíficas." },
+              { who:"Luis", icon:"👨‍🎓", text:"Equidad no es dar lo mismo… es dar lo necesario." },
+              { who:"Ana", icon:"👩‍🎓", text:"Y con perspectiva intercultural: reconocer y valorar la diversidad." }
+            ],
+            question: {
+              prompt: "¿Cuál ejemplo muestra mejor Equidad?",
+              options: [
+                { key:"A", text:"Dar el mismo apoyo a todos aunque no lo necesiten", explain:"Eso es igualdad simple, no equidad." },
+                { key:"B", text:"Solo apoyar a quien ya va bien", explain:"Aumenta desigualdades." },
+                { key:"C", text:"Dar apoyos diferentes según necesidades para lograr resultados justos", explain:"Eso es equidad." }
+              ],
+              answer: "C",
+              onCorrect: { points: 25, toast:"✅ ¡Correcto! Equidad = apoyos según necesidades para justicia." },
+              onWrong: { lives: -1, toast:"❌ Equidad no es dar lo mismo, es dar lo necesario." }
+            }
+          },
+          {
+            dialog: [
+              { who:"Profe Mariana", icon:"👩‍🏫", text:"Ahora: Cultura de paz. Elige la acción que construye convivencia respetuosa." }
+            ],
+            question: {
+              prompt: "¿Qué acción fomenta mejor la Cultura de paz?",
+              options: [
+                { key:"A", text:"Resolver conflictos con diálogo y acuerdos", explain:"Respeto y justicia." },
+                { key:"B", text:"Humillar a quien piensa distinto", explain:"Violenta la dignidad." },
+                { key:"C", text:"Ignorar la discriminación", explain:"Permite desigualdad." }
+              ],
+              answer: "A",
+              onCorrect: { points: 20, toast:"✅ ¡Bien! Cultura de paz = diálogo, respeto y justicia." },
+              onWrong: { lives: -1, toast:"❌ Cultura de paz se construye con diálogo y acuerdos." }
+            }
+          }
+        ]
+      },
+      {
+        id: 5,
+        title: "Nivel 5: Sistema Educativo",
+        tag: "Sistema",
+        hint: "Escuela, Estado, MCCEMS, perfil de egreso y portabilidad.",
+        unlocks: [
+          { name:"Escuela", def:"Espacio de formación e interacción educativa." },
+          { name:"Estado", def:"Institución que regula la vida social en un territorio." },
+          { name:"Comunidad estudiantil", def:"Conjunto de estudiantes de un plantel." },
+          { name:"Perfil de egreso", def:"Conocimientos, habilidades y valores al finalizar EMS." },
+          { name:"Portabilidad", def:"Derecho a continuar estudios sin afectar trayectoria." },
+          { name:"Trabajo colaborativo", def:"Aprendizaje con metas y responsabilidades compartidas." },
+          { name:"MCCEMS", def:"Marco que organiza la EMS." },
+          { name:"Enfoque NEM (MCCEMS)", def:"Justicia, inclusión y pensamiento crítico." }
+        ],
+        steps: [
+          {
+            dialog: [
+              { who:"Narrador", icon:"🎙️", text:"Escenario: Congreso educativo virtual. Tu misión: reconocer el papel del Estado y la escuela en el MCCEMS." },
+              { who:"Ana", icon:"👩‍🎓", text:"El perfil de egreso es la meta grande: conocimientos, habilidades y valores." }
+            ],
+            question: {
+              prompt: "¿Qué describe mejor el Perfil de egreso?",
+              options: [
+                { key:"A", text:"Solo calificaciones finales", explain:"Eso es sumativo, no perfil." },
+                { key:"B", text:"Conjunto de saberes, habilidades y valores", explain:"Eso es el perfil." },
+                { key:"C", text:"Lista de materias cursadas", explain:"No necesariamente dice lo que desarrollaste." }
+              ],
+              answer: "B",
+              onCorrect: { points: 25, toast:"✅ ¡Exacto! Perfil de egreso = saberes + habilidades + valores." },
+              onWrong: { lives: -1, toast:"❌ Perfil de egreso no es solo calificaciones o materias." }
+            }
+          },
+          {
+            dialog: [
+              { who:"Luis", icon:"👨‍🎓", text:"Si me cambio de plantel y no me “rompen” la trayectoria… ¿eso es portabilidad?" },
+              { who:"Profe Mariana", icon:"👩‍🏫", text:"Sí. Es un derecho para continuar estudios sin afectar tu camino." }
+            ],
+            question: {
+              prompt: "¿Qué es Portabilidad?",
+              options: [
+                { key:"A", text:"Repetir todo aunque ya lo cursaste", explain:"Eso afecta la trayectoria." },
+                { key:"B", text:"Cambiarte de escuela sin documentos", explain:"No es lo mismo." },
+                { key:"C", text:"Continuar estudios sin afectar trayectoria académica", explain:"Definición correcta." }
+              ],
+              answer: "C",
+              onCorrect: { points: 20, toast:"✅ ¡Correcto! Portabilidad protege tu trayectoria." },
+              onWrong: { lives: -1, toast:"❌ Portabilidad = continuar sin afectar trayectoria." }
+            }
+          }
+        ]
+      }
+    ];
+
+    const state = {
+      levelIndex: 0,
+      stepIndex: 0,
+      points: 0,
+      lives: 3,
+      completed: new Set(),
+      unlocked: new Map(),
+      solvedSteps: new Set(),
+      awardedPointsByStep: new Map()
+    };
+
+    const TOTAL_UNLOCKS = LEVELS.reduce((acc,l)=>acc + l.unlocks.length, 0);
+    const MAX_POINTS = LEVELS.reduce(
+      (acc, level) => acc + level.steps.reduce((sum, step) => sum + (step.question?.onCorrect?.points ?? 0), 0),
+      0
+    );
+
+    const el = (id)=>document.getElementById(id);
+    const pointsEl = el("points");
+    const pointsMaxEl = el("pointsMax");
+    const livesEl  = el("lives");
+    const unlocksCountEl = el("unlocksCount");
+    const unlocksTotalEl = el("unlocksTotal");
+    const screenH2 = el("screenH2");
+    const screenHint = el("screenHint");
+    const screenTag = el("screenTag");
+    const dialogBox = el("dialogBox");
+    const questionBox = el("questionBox");
+    const toast = el("toast");
+    const progressList = el("progressList");
+    const conceptList = el("conceptList");
+    const asideToast = el("asideToast");
+    const finalBox = el("finalBox");
+    const exportOut = el("exportOut");
+    const loseBanner = el("loseBanner");
+
+    const btnPrev = el("btnPrev");
+    const btnNext = el("btnNext");
+    const btnReset = el("btnReset");
+    const btnRestart = el("btnRestart");
+    const btnExport = el("btnExport");
+    const btnShowCards = el("btnShowCards");
+    const btnHelp = el("btnHelp");
+    const btnCopyLink = el("btnCopyLink");
+
+    unlocksTotalEl.textContent = TOTAL_UNLOCKS;
+    pointsMaxEl.textContent = MAX_POINTS;
+
+    function stepKey(levelIndex, stepIndex){
+      return `${levelIndex}:${stepIndex}`;
+    }
+
+    function isCurrentStepSolved(){
+      return state.solvedSteps.has(stepKey(state.levelIndex, state.stepIndex));
+    }
+
+    function showToast(msg, kind="info"){
+      toast.textContent = msg;
+      toast.classList.add("show");
+      toast.style.borderColor = kind==="ok" ? "rgba(103,214,182,.78)" :
+                                kind==="bad" ? "rgba(255,138,146,.78)" :
+                                "rgba(162,147,211,.62)";
+      toast.style.background = kind==="ok" ? "rgba(211,248,236,.9)" :
+                               kind==="bad" ? "rgba(255,233,235,.96)" :
+                               "rgba(236,229,252,.9)";
+      setTimeout(()=>toast.classList.remove("show"), 2200);
+    }
+
+    function showAsideToast(msg){
+      asideToast.textContent = msg;
+      asideToast.classList.add("show");
+      setTimeout(()=>asideToast.classList.remove("show"), 2400);
+    }
+
+    function showLoseBanner(onDone){
+      loseBanner.classList.add("show");
+      setTimeout(()=>{
+        loseBanner.classList.remove("show");
+        if(typeof onDone === "function") onDone();
+      }, 1700);
+    }
+
+    function renderHUD(){
+      pointsEl.textContent = state.points;
+      livesEl.textContent = state.lives;
+      unlocksCountEl.textContent = state.unlocked.size;
+    }
+
+    function resetLevelProgress(levelIndex){
+      const prefix = `${levelIndex}:`;
+      for(const key of [...state.solvedSteps]){
+        if(key.startsWith(prefix)){
+          state.solvedSteps.delete(key);
+        }
+      }
+      for(const [key, awarded] of [...state.awardedPointsByStep.entries()]){
+        if(key.startsWith(prefix)){
+          state.points -= awarded;
+          state.awardedPointsByStep.delete(key);
+        }
+      }
+      if(state.points < 0) state.points = 0;
+    }
+
+    function renderProgress(){
+      progressList.innerHTML = "";
+      for(const level of LEVELS.slice(1)){
+        const row = document.createElement("div");
+        row.className = "level-row";
+        const left = document.createElement("div");
+        left.className = "left";
+
+        const dot = document.createElement("div");
+        dot.className = "dot";
+        if(state.completed.has(level.id)) dot.classList.add("done");
+        if(level.id === state.levelIndex) dot.classList.add("current");
+
+        const ttl = document.createElement("div");
+        ttl.className = "lvl-title";
+        ttl.textContent = level.title;
+
+        left.appendChild(dot);
+        left.appendChild(ttl);
+
+        const st = document.createElement("div");
+        st.className = "lvl-state";
+        if(state.completed.has(level.id)) st.textContent = "Completado ✅";
+        else if(level.id === state.levelIndex) st.textContent = "En curso…";
+        else st.textContent = "Pendiente";
+
+        row.appendChild(left);
+        row.appendChild(st);
+
+        row.addEventListener("click", ()=>{
+          if(level.id <= maxReachableLevel()){
+            state.levelIndex = level.id;
+            state.stepIndex = 0;
+            render();
+          } else {
+            showAsideToast("🔒 Completa los niveles anteriores para desbloquear este.");
+          }
+        });
+
+        progressList.appendChild(row);
+      }
+    }
+
+    function maxReachableLevel(){
+      let max = 1;
+      for(let i=1;i<=5;i++){
+        if(i===1 || state.completed.has(i-1)) max = i;
+      }
+      return Math.max(max, 1);
+    }
+
+    function renderConcepts(){
+      conceptList.innerHTML = "";
+      const all = [];
+      for(const lvl of LEVELS.slice(1)){
+        for(const u of lvl.unlocks) all.push(u);
+      }
+
+      for(const c of all){
+        const chip = document.createElement("span");
+        chip.className = "chip";
+        const isUnlocked = state.unlocked.has(c.name);
+        if(isUnlocked) chip.classList.add("unlocked");
+        chip.textContent = c.name;
+
+        chip.title = isUnlocked ? state.unlocked.get(c.name) : "🔒 Bloqueado: completa niveles para desbloquear";
+        chip.addEventListener("click", ()=>{
+          if(isUnlocked){
+            showAsideToast(`🃏 ${c.name}: ${state.unlocked.get(c.name)}`);
+          } else {
+            showAsideToast("🔒 Concepto bloqueado. Avanza en las misiones.");
+          }
+        });
+
+        conceptList.appendChild(chip);
+      }
+    }
+
+    function renderDialog(lines){
+      dialogBox.innerHTML = "";
+      lines.forEach(line=>{
+        const row = document.createElement("div");
+        row.className = "line";
+
+        const av = document.createElement("div");
+        av.className = "avatar";
+        av.textContent = line.icon;
+
+        const bub = document.createElement("div");
+        bub.className = "bubble";
+
+        const who = document.createElement("div");
+        who.className = "who";
+        who.textContent = line.who;
+
+        const txt = document.createElement("div");
+        txt.className = "text";
+        txt.textContent = line.text;
+
+        bub.appendChild(who);
+        bub.appendChild(txt);
+
+        row.appendChild(av);
+        row.appendChild(bub);
+        dialogBox.appendChild(row);
+      });
+    }
+
+    function renderQuestion(step){
+      questionBox.innerHTML = "";
+      if(!step.question) return;
+
+      const q = step.question;
+      const solved = isCurrentStepSolved();
+
+      const wrap = document.createElement("div");
+      wrap.className = "dialog";
+      wrap.style.marginTop = "12px";
+
+      const p = document.createElement("div");
+      p.className = "text";
+      p.style.fontWeight = "750";
+      p.textContent = "🧩 Reto: " + q.prompt;
+
+      wrap.appendChild(p);
+
+      const options = document.createElement("div");
+      options.className = "options";
+
+      q.options.forEach(opt=>{
+        const b = document.createElement("button");
+        b.className = "option";
+        b.innerHTML = `${opt.key}) ${opt.text}<small>${opt.explain}</small>`;
+        if(solved) b.disabled = true;
+
+        b.addEventListener("click", ()=>{
+          if(isCurrentStepSolved()) return;
+
+          const correct = opt.key === q.answer;
+          if(correct){
+            b.classList.add("correct");
+            const currentKey = stepKey(state.levelIndex, state.stepIndex);
+            state.solvedSteps.add(currentKey);
+            if(!state.awardedPointsByStep.has(currentKey)){
+              const earned = (q.onCorrect?.points ?? 0);
+              state.points += earned;
+              state.awardedPointsByStep.set(currentKey, earned);
+            }
+            showToast(q.onCorrect?.toast ?? "✅ Correcto", "ok");
+            renderHUD();
+            setTimeout(()=>next(), 650);
+          } else {
+            b.classList.add("wrong");
+            state.lives += (q.onWrong?.lives ?? 0);
+            showToast(q.onWrong?.toast ?? "❌ Incorrecto", "bad");
+            if(state.lives <= 0){
+              showToast("💥 Te quedaste sin vidas.", "bad");
+              showLoseBanner(()=>{
+                resetAll(false);
+                showToast("🎮 Juego reiniciado desde el inicio.", "bad");
+              });
+            }
+            renderHUD();
+          }
+        });
+
+        options.appendChild(b);
+      });
+
+      wrap.appendChild(options);
+      questionBox.appendChild(wrap);
+    }
+
+    function unlockLevelConcepts(levelIndex){
+      const lvl = LEVELS[levelIndex];
+      if(!lvl || !lvl.unlocks || lvl.unlocks.length===0) return;
+
+      let newly = 0;
+      for(const u of lvl.unlocks){
+        if(!state.unlocked.has(u.name)){
+          state.unlocked.set(u.name, u.def);
+          newly++;
+        }
+      }
+      if(newly>0){
+        showAsideToast(`🔓 Desbloqueaste ${newly} concepto(s) del ${lvl.title}.`);
+        renderConcepts();
+        renderHUD();
+      }
+    }
+
+    function maybeShowFinal(){
+      if(state.completed.size >= 5) finalBox.classList.add("show");
+      else finalBox.classList.remove("show");
+    }
+
+    function prev(){
+      if(state.levelIndex===0 && state.stepIndex===0) return;
+
+      if(state.stepIndex>0){
+        state.stepIndex--;
+      } else {
+        const prevLevel = Math.max(0, state.levelIndex-1);
+        state.levelIndex = prevLevel;
+        state.stepIndex = Math.max(0, LEVELS[state.levelIndex].steps.length-1);
+      }
+      render();
+    }
+
+    function next(){
+      const lvl = LEVELS[state.levelIndex];
+      const step = lvl.steps[state.stepIndex];
+
+      if(step?.question && !isCurrentStepSolved()){
+        showToast("🧩 Resuelve el reto para avanzar.", "info");
+        return;
+      }
+
+      if(state.stepIndex < lvl.steps.length - 1){
+        state.stepIndex++;
+        render();
+        return;
+      }
+
+      if(state.levelIndex !== 0){
+        state.completed.add(lvl.id);
+        unlockLevelConcepts(lvl.id);
+        showAsideToast(`✅ Misión completada: ${lvl.title}`);
+      }
+
+      if(state.levelIndex < LEVELS.length - 1){
+        state.levelIndex++;
+        state.stepIndex = 0;
+      }
+      render();
+    }
+
+    function render(){
+      renderHUD();
+      renderProgress();
+      renderConcepts();
+
+      const lvl = LEVELS[state.levelIndex];
+      const step = lvl.steps[state.stepIndex];
+
+      screenH2.textContent = lvl.title;
+      screenHint.textContent = lvl.hint;
+      screenTag.textContent = lvl.tag;
+
+      renderDialog(step.dialog);
+
+      questionBox.innerHTML = "";
+      if(step.question) renderQuestion(step);
+
+      btnPrev.disabled = (state.levelIndex===0 && state.stepIndex===0);
+      btnPrev.style.opacity = btnPrev.disabled ? 0.6 : 1;
+
+      btnNext.textContent = (state.levelIndex===LEVELS.length-1 && state.stepIndex===lvl.steps.length-1)
+        ? "Finalizar"
+        : "Siguiente ➡️";
+
+      maybeShowFinal();
+    }
+
+    function resetAll(showMessage = true){
+      state.levelIndex = 0;
+      state.stepIndex = 0;
+      state.points = 0;
+      state.lives = 3;
+      state.completed = new Set();
+      state.unlocked = new Map();
+      state.solvedSteps = new Set();
+      state.awardedPointsByStep = new Map();
+      exportOut.textContent = "";
+      render();
+      if(showMessage) showToast("🔁 Juego reiniciado.", "info");
+    }
+
+    function exportProgress(){
+      const completedList = [...state.completed].sort((a,b)=>a-b).map(id=>LEVELS[id].title);
+      const unlockedList = [...state.unlocked.entries()].map(([k,v])=>`• ${k}: ${v}`).join("\n");
+      const txt =
+`PROGRESO DEL JUEGO
+- Puntos: ${state.points}/${MAX_POINTS}
+- Vidas: ${state.lives}
+- Misiones completadas: ${completedList.length ? completedList.join(" | ") : "Ninguna"}
+- Conceptos desbloqueados (${state.unlocked.size}/${TOTAL_UNLOCKS}):
+${unlockedList || "Ninguno"}`;
+      exportOut.textContent = txt;
+      showToast("📦 Progreso exportado abajo (puedes copiarlo).", "ok");
+    }
+
+    function showFlashcards(){
+      const unlocked = [...state.unlocked.entries()];
+      if(unlocked.length===0){
+        showAsideToast("Aún no desbloqueas conceptos. Completa el Nivel 1.");
+        return;
+      }
+      const txt = unlocked.map(([k,v])=>`🃏 ${k}\n→ ${v}`).join("\n\n");
+      alert(txt);
+    }
+
+    function showHelp(){
+      alert(
+`¿Cómo jugar?
+1) Lee los diálogos.
+2) Resuelve el reto (elige la opción correcta).
+3) Si aciertas: ganas puntos y desbloqueas conceptos.
+4) Si fallas: pierdes 1 vida. Si llegas a 0, se reinicia todo el juego.
+5) Completa las 5 misiones para alcanzar el Perfil de egreso.
+
+Tip: Haz click en los conceptos desbloqueados para ver su definición.`
+      );
+    }
+
+    function fallbackCopyLink(link){
+      const ta = document.createElement("textarea");
+      ta.value = link;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      try{
+        document.execCommand("copy");
+        showAsideToast("🔗 Enlace copiado al portapapeles.");
+      } catch{
+        showAsideToast("⚠️ No se pudo copiar automáticamente.");
+      }
+      document.body.removeChild(ta);
+    }
+
+    async function copyOrShareLink(){
+      const link = window.location.href;
+
+      if(navigator.share){
+        try{
+          await navigator.share({
+            title: "Misión: Nueva Escuela Mexicana",
+            text: "Te comparto esta actividad interactiva:",
+            url: link
+          });
+          showAsideToast("✅ Enlace compartido.");
+          return;
+        } catch{
+        }
+      }
+
+      if(navigator.clipboard && window.isSecureContext){
+        try{
+          await navigator.clipboard.writeText(link);
+          showAsideToast("🔗 Enlace copiado al portapapeles.");
+          return;
+        } catch{
+        }
+      }
+
+      fallbackCopyLink(link);
+    }
+
+    btnPrev.addEventListener("click", prev);
+    btnNext.addEventListener("click", next);
+    btnReset.addEventListener("click", resetAll);
+    btnRestart.addEventListener("click", resetAll);
+    btnExport.addEventListener("click", exportProgress);
+    btnShowCards.addEventListener("click", showFlashcards);
+    btnHelp.addEventListener("click", showHelp);
+    btnCopyLink.addEventListener("click", copyOrShareLink);
+
+    render();
+  </script>
+</body>
+</html>
